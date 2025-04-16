@@ -23,12 +23,12 @@ $total_all = mysqli_fetch_assoc($total_pendapatan);
 <body style="background-image: url(image/resto.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
     
 
-<div class="alert bg-warning mt-2 text-center" role="alert" data-aos="fade-down" data-aos-duration="1000">
+<div class="alert bg-warning mt-2 text-center m-2" role="alert" data-aos="fade-down" data-aos-duration="1000">
     <h3><b><i class="bi bi-speedometer"></i> DASHBOARD</b></h3>
 </div>
 
 <div id="layoutSidenav_content">
-    <div class="row">
+    <div class="row m-3">
 
         <div class="col-6" data-aos="fade-right" data-aos-duration="1000">
             <div class="alert bg-success mt-2 text-center text-light" role="alert">
