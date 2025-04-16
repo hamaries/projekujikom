@@ -158,7 +158,10 @@ include "boot.php";
           $file = $_FILES['gambar']['tmp_name'];
           // move_uploaded_file($file, "gambar/$nama");
           move_uploaded_file($file, "image/$nama");
-          $konek->query("insert into produk(idproduk,namaproduk,gambar,harga,stok) values ('$_POST[idproduk]','$_POST[namaproduk]','$nama','$_POST[harga]','$_POST[stok]')");
+          $input=$konek->query("insert into produk(idproduk,namaproduk,gambar,harga,stok) values ('$_POST[idproduk]','$_POST[namaproduk]','$nama','$_POST[harga]','$_POST[stok]')");
+          if($input){
+            echo"berhasil ditambahkan";
+          }
         }
         $tampil = $konek->query("select * from produk");
         while ($a = $tampil->fetch_array()) {
