@@ -4,7 +4,7 @@ include "boot.php";
 
 
 
-<div class="alert bg-light mt-2 text-center" role="alert">
+<div class="alert bg-warning mt-2 text-center" role="alert">
         <h3><b><i class="bi bi-book-fill"></i> REKAP</b></h3>
     </div>
 

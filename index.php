@@ -43,12 +43,13 @@ if (isset($_POST['login'])) {
     <link rel="stylesheet" href="style.css">
     <title>Login</title>
 </head>
+
 <body style="background-image: url(image/bg-login.jpg); background-position: no-repeat; background-size: cover;">
     <div class="d-flex justify-content-center align-items-center vh-100">
         <div class="shadow-lg col-3 p-3 bg-body-tertiary rounded">
             <div class="p-3 bg-light" style="max-width: 25rem;"></div>
             <h1 class="text-center"><b>LOGIN</b></h1>
-            <div class="container mt-5"></div>
+            <div class="container mt-4"></div>
             <form action="" method="post">
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
@@ -63,7 +64,9 @@ if (isset($_POST['login'])) {
                         </button>
                         </div>
                 </div>
-                <input type="submit" name="login" class="btn btn-primary mt-3" value="Login">
+                <div class="text-center">
+                <input type="submit" name="login" class="btn btn-primary mt-2" value="Login">
+                </div>
             </form>
         </div>
     </div>
