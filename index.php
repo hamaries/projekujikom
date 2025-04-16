@@ -54,13 +54,37 @@ if (isset($_POST['login'])) {
                     <label for="username" class="form-label">Username</label>
                     <input type="text" class="form-control" id="username" name="username" placeholder="Masukan username" required>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 ">
                     <label for="password" class="form-label">Password</label>
+                    <div class="d-flex">
                     <input type="password" class="form-control" id="password" name="password" placeholder="Masukan password" required>
+                    <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                            <i class="bi bi-eye-slash" id="eyeIcon"></i>
+                        </button>
+                        </div>
                 </div>
-                <input type="submit" name="login" class="btn btn-primary" value="Login">
+                <input type="submit" name="login" class="btn btn-primary mt-3" value="Login">
             </form>
         </div>
     </div>
+    <script>
+    // Toggle password visibility
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordField = document.getElementById("password");
+    const eyeIcon = document.getElementById("eyeIcon");
+
+
+    togglePassword.addEventListener("click", function () {
+        // Toggle password visibility
+        const type = passwordField.type === "password" ? "text" : "password";
+        passwordField.type = type;
+
+
+        // Toggle eye icon
+        eyeIcon.classList.toggle("bi-eye");
+        eyeIcon.classList.toggle("bi-eye-slash");
+    });
+</script>
+
 </body>
 </html>
