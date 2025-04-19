@@ -1,130 +1,93 @@
 <?php
-include "boot.php";
+include "boot.php"; // Pastikan file ini punya <html>, <body>, dan sidebar
 ?>
 
-
-
-<div class="alert bg-warning mt-2 text-center" role="alert">
+<div class="container-fluid">
+    <div class="alert bg-warning mt-2 text-center" role="alert">
         <h3><b><i class="bi bi-book-fill"></i> REKAP</b></h3>
     </div>
 
+    <!-- Form Pencarian -->
+    <form action="rekap.php" method="get">
+        <div class="input-group shadow mb-3">
+            <input type="date" name="awal" class="form-control" aria-label="Tanggal Awal" required>
+            <input type="date" name="akhir" class="form-control" aria-label="Tanggal Akhir" required>
+            <span class="input-group-text">
+                <button class="btn btn-success" type="submit" title="Cari"><i class="bi bi-search"></i></button>
+                <button class="btn btn-primary mx-2" onclick="printDiv('print')" type="button" title="Print"><i class="bi bi-printer-fill"></i></button>
+            </span>
+        </div>
+    </form>
 
-    <!-- header -->
-   
-<form action="rekap.php"method="get" >
-<div class="input-group shadow" target="tampil.php?page=6" >
-  <input type="date" aria-label="First name" name="awal" class="form-control">
-  <input type="date" aria-label="Last name" name="akhir" class="form-control">
-  <span class="input-group-text"><button class="btn btn-success " type="submit" data-toggle="search" data-placement="right" title="search"><i class="bi bi-search"></i></button>
-  <button class="btn btn-primary mx-2" onclick="printDiv('print')" type="submit" data-toggle="print" data-placement="right" title="print"><i class="bi bi-printer-fill"></i></button>
-</span>
-</div>
-</form>
+    <!-- Tombol Kembali -->
+    <div class="mb-3">
+        <a href="tampil.php?page=6" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Kembali
+        </a>
+    </div>
 
+    <!-- Hasil Rekap -->
     <fieldset id="print">
-        <div class="mt-3">
-        <table class="table  table-bordered border-dark">
+        <table class="table table-bordered border-dark">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">
-                        <h6><b>No</b></h6>
-                    </th>
-
-                    <th scope="col">
-                        <h6><b>Tanggal</b></h6>
-                    </th>
-                    <th scope="col">
-                        <h6><b>Kasir</b></h6>
-                    </th>
-                    <th scope="col">
-                        <h6><b>Nama Pelanggan</b></h6>
-                    </th>
-                    <th scope="col">
-                        <h6><b>Nama Barang</b></h6>
-                    </th>
-                    <th scope="col">
-                        <h6><b>No Meja</b></h6>
-                    </th>
-                    <th scope="col">
-                        <h6><b>Harga</b></h6>
-                    </th>
-                    <th scope="col">
-                        <h6><b>Jumlah</b></h6>
-                    </th>
-                    <th scope="col">
-                        <h6><b>Total</b></h6>
-                    </th>
-                    
+                    <th>No</th>
+                    <th>Tanggal</th>
+                    <th>pelayan</th>
+                    <th>Nama Pelanggan</th>
+                    <th>Nama Barang</th>
+                    <th>No Meja</th>
+                    <th>Harga</th>
+                    <th>Jumlah</th>
+                    <th>Total</th>
                 </tr>
             </thead>
-            </thead>
-            </div>
+            <tbody>
+                <?php
+                include "koneksi.php";
+                @$awal = $_GET['awal'];
+                @$akhir = $_GET['akhir'];
+                $no = 1;
 
-            <!-- koneksi rekap -->
+                if (!empty($awal) && !empty($akhir)) {
+                    $query = "SELECT * FROM transaksi WHERE tanggal BETWEEN '$awal' AND '$akhir'";
+                } else {
+                    $query = "SELECT * FROM transaksi";
+                }
 
-            <?php include "koneksi.php";
-      @$cari = $_GET['awal'];
-      if ($cari =="") {
-
-        $tampil = $konek->query("select * from transaksi");
-        while ($t = $tampil->fetch_array()) {
-          @$no++;
-      ?>
-
-            <tbody class="table">
-                <tr>
-                    <th scope="row"><?php echo $no; ?></th>
-                    <td><?php echo $t['tanggal']; ?></td>
-                    <td><?php echo $t['kasir']; ?></td>
-                    <td><?php echo $t['namapelanggan']; ?></td>
-                    <td><?php echo $t['namaproduk']; ?></td>
-                    <td><?php echo $t['meja']; ?></td>
-                    <td><?php echo $t['harga']; ?></td>
-                    <td><?php echo $t['jumlah']; ?></td>
-                    <td><?php echo $t['total']; ?></td>
-                    
-
-
-                    <?php
-          }
-        } else {
-          $tampil = $konek->query("select * from transaksi where tanggal  between '$_GET[awal]' and '$_GET[akhir]'");
-          while ($t = $tampil->fetch_array()) {
-            @$no++;
-            ?>
-            <tbody class="table">
-                <tr>
-                    <td><?php echo $no;?></td>
-                    <td><?php echo $t['tanggal']; ?></td>
-                    <td><?php echo $t['kasir']; ?></td>
-                    <td><?php echo $t['namapelanggan']; ?></td>
-                    <td><?php echo $t['namaproduk']; ?></td>
-                    <td><?php echo $t['meja']; ?></td>
-                    <td><?php echo $t['harga']; ?></td>
-                    <td><?php echo $t['jumlah']; ?></td>
-                    <td><?php echo $t['total']; ?></td>
-                    
-
-
-                    <?php
-          }
-        }
-          ?>
-                </tr>
-            </tbody>
+                $tampil = $konek->query($query);
+                while ($t = $tampil->fetch_array()) {
+                    echo "<tr>
+                        <td>{$no}</td>
+                        <td>{$t['tanggal']}</td>
+                        <td>{$t['kasir']}</td>
+                        <td>{$t['namapelanggan']}</td>
+                        <td>{$t['namaproduk']}</td>
+                        <td>{$t['meja']}</td>
+                        <td>{$t['harga']}</td>
+                        <td>{$t['jumlah']}</td>
+                        <td>{$t['total']}</td>
+                    </tr>";
+                    $no++;
+                }
+                ?>
             </tbody>
         </table>
     </fieldset>
-    <script type="text/javascript">
+</div>
+
+<!-- Script Print -->
+<script>
     function printDiv(el) {
-        var a = document.body.innerHTML;
-        var b = document.getElementById(el).innerHTML;
+        const printContents = document.getElementById(el).innerHTML;
+        const originalContents = document.body.innerHTML;
 
-        document.body.innerHTML = b;
+        document.body.innerHTML = printContents;
         window.print();
-        document.body.innerHTML = a;
-
+        document.body.innerHTML = originalContents;
+        location.reload(); // reload biar layout balik
     }
-    </script>
+</script>
 
 </body>
+</html>

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2025 at 03:39 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Waktu pembuatan: 19 Apr 2025 pada 07.36
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `aman`
+-- Struktur dari tabel `aman`
 --
 
 CREATE TABLE `aman` (
@@ -35,7 +35,7 @@ CREATE TABLE `aman` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `aman`
+-- Dumping data untuk tabel `aman`
 --
 
 INSERT INTO `aman` (`no`, `username`, `password`, `level`) VALUES
@@ -45,7 +45,7 @@ INSERT INTO `aman` (`no`, `username`, `password`, `level`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pelanggan`
+-- Struktur dari tabel `pelanggan`
 --
 
 CREATE TABLE `pelanggan` (
@@ -57,39 +57,55 @@ CREATE TABLE `pelanggan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `pelanggan`
+-- Dumping data untuk tabel `pelanggan`
 --
 
 INSERT INTO `pelanggan` (`no`, `namapelanggan`, `tanggal`, `nomeja`, `pelayan`) VALUES
-(30, 'raman', '2025-03-18 03:09:15', 'meja 1', 'Pelayan 1'),
-(31, 'ilham', '2025-03-18 03:25:31', 'meja 4', 'pelayan 3');
+(35, 'ilham', '2025-04-19 05:09:45', 'meja 2', 'pelayan 4');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `produk`
+-- Struktur dari tabel `produk`
 --
 
 CREATE TABLE `produk` (
   `no` int(5) NOT NULL,
   `idproduk` varchar(10) NOT NULL,
   `namaproduk` varchar(30) NOT NULL,
-  `gambar` varchar(50) NOT NULL,
+  `gambar` text NOT NULL,
   `harga` int(30) NOT NULL,
   `stok` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `produk`
+-- Dumping data untuk tabel `produk`
 --
 
 INSERT INTO `produk` (`no`, `idproduk`, `namaproduk`, `gambar`, `harga`, `stok`) VALUES
-(39, '1', 'ayam goreng', 'ayam-goreng-lengkuas.jpg', 15000, 10);
+(39, '1', 'ayam goreng', 'ayam-goreng-lengkuas.jpg', 15000, 10),
+(49, '2', 'nasi goreng', 'nasi goreng.jpg', 15000, 10),
+(50, '3', 'ikan goreng', '2 heerlijke vis recepten; Bawal Goreng Kendari, Gule Ikan Bali.jpg', 25000, 5);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `transaksi`
+-- Struktur dari tabel `rekap`
+--
+
+CREATE TABLE `rekap` (
+  `no` int(50) NOT NULL,
+  `nama_pelanggan` varchar(20) NOT NULL,
+  `nama_barang` varchar(20) NOT NULL,
+  `no_meja` int(7) NOT NULL,
+  `harga` int(20) NOT NULL,
+  `tanggal` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `transaksi`
 --
 
 CREATE TABLE `transaksi` (
@@ -100,72 +116,74 @@ CREATE TABLE `transaksi` (
   `meja` int(6) NOT NULL,
   `harga` int(20) NOT NULL,
   `jumlah` int(10) NOT NULL,
-  `total` int(15) NOT NULL
+  `total` int(15) NOT NULL,
+  `tanggal` date NOT NULL DEFAULT curdate()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `transaksi`
+-- Dumping data untuk tabel `transaksi`
 --
 
-INSERT INTO `transaksi` (`no`, `kasir`, `namapelanggan`, `namaproduk`, `meja`, `harga`, `jumlah`, `total`) VALUES
-(16, 'Pelayan 1', 'raman', 'ayam goreng', 0, 15000, 3, 45000),
-(17, 'pelayan 3', 'ilham', 'ayam goreng', 0, 15000, 4, 60000);
+INSERT INTO `transaksi` (`no`, `kasir`, `namapelanggan`, `namaproduk`, `meja`, `harga`, `jumlah`, `total`, `tanggal`) VALUES
+(23, 'Pelayan 1', 'ilham', 'nasi goreng', 0, 15000, 2, 30000, '2025-04-19'),
+(28, 'pelayan 4', 'ilham', 'ayam goreng', 0, 15000, 2, 30000, '2025-04-19'),
+(29, 'pelayan 4', 'ilham', 'ikan goreng', 0, 25000, 1, 25000, '2025-04-19');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `aman`
+-- Indeks untuk tabel `aman`
 --
 ALTER TABLE `aman`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `pelanggan`
+-- Indeks untuk tabel `pelanggan`
 --
 ALTER TABLE `pelanggan`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `produk`
+-- Indeks untuk tabel `produk`
 --
 ALTER TABLE `produk`
   ADD PRIMARY KEY (`no`);
 
 --
--- Indexes for table `transaksi`
+-- Indeks untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`no`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `aman`
+-- AUTO_INCREMENT untuk tabel `aman`
 --
 ALTER TABLE `aman`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `pelanggan`
+-- AUTO_INCREMENT untuk tabel `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `no` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `no` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
--- AUTO_INCREMENT for table `produk`
+-- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `no` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `no` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
--- AUTO_INCREMENT for table `transaksi`
+-- AUTO_INCREMENT untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
